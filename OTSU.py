@@ -25,9 +25,11 @@ class OTSU():
 
         return arr
 
+    # compute weight for each threshold
     def weight(self, start, end, whole_pixel):
         return sum(self.histogram_array[start:end]) / float(whole_pixel)
 
+    # compute weight for each u
     def mean(self, start, end, weight):
         if weight == 0:
             return 0
@@ -38,6 +40,7 @@ class OTSU():
 
         return mean / float(weight)
 
+    # form 1 ~ 255, find the optimal threshold value
     def compute_threshold(self):
         whole_pixel = self.img.shape[0] * self.img.shape[1]
         max_v = 0
@@ -51,6 +54,7 @@ class OTSU():
                 max_v = variance_b_square
                 self.threshold_values = i
 
+    # use the best threshold value to generate 2 bit image
     def generate_bitmized_img(self):
         rows, col = self.img.shape
         gray_img = np.zeros((rows, col))
