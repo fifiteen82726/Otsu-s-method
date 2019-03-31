@@ -1,7 +1,7 @@
-import math
-import numpy as np
 from matplotlib import pyplot as plt
 from PIL import Image
+import numpy as np
+
 
 class OTSU():
     def __init__(self):
@@ -10,8 +10,8 @@ class OTSU():
     def generate_img(self, img):
         self.histogram_array = self.histogram(img)
         self.img = img
-        t = self.threshold()
-
+        self.compute_threshold()
+        self.generate_bitmized_img()
 
     # return array including include value from 0 ~ 255
     def histogram(self, img):
@@ -38,7 +38,7 @@ class OTSU():
 
         return mean / float(weight)
 
-    def threshold(self):
+    def compute_threshold(self):
         whole_pixel = self.img.shape[0] * self.img.shape[1]
         max_v = 0
         t = 0
@@ -51,12 +51,19 @@ class OTSU():
                 max_v = variance_b_square
                 self.threshold_values = i
 
-
-
+    def generate_bitmized_img(self):
+        rows, col = self.img.shape
+        gray_img = np.zeros((rows, col))
+        for i in xrange(0, rows):
+            for j in xrange(0, col):
+                if self.img[i][j] < self.threshold_values:
+                    gray_img[i][j] = 0
+                else:
+                    gray_img[i][j] = 255
+        plt.imshow(gray_img, cmap='gray')
+        plt.show()
 
 
 image = Image.open('img/t3-gray.jpg').convert("L")
 img = np.asarray(image)
 OTSU().generate_img(img)
-
-
