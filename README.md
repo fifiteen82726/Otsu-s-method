@@ -15,6 +15,7 @@ pip install numpy
 ## Run
 ```bash
 python OTSU.py
+# Show histogram and quantized image directly 
 ```
 
 ## Result
