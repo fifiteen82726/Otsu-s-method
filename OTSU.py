@@ -68,6 +68,6 @@ class OTSU():
         plt.show()
 
 
-image = Image.open('img/t3-gray.jpg').convert("L")
+image = Image.open('img/t1-gray.jpg').convert("L")
 img = np.asarray(image)
 OTSU().generate_img(img)
